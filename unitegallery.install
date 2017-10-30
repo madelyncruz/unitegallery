@@ -1,0 +1,68 @@
+<?php
+
+/**
+ * @file
+ * Installation file for the Unite gallery module.
+ */
+
+ /**
+ * Implements hook_install().
+ */
+function unitegallery_install() {
+  db_update('system')
+    ->fields(array('weight' => 2))
+    ->condition('name', 'unitegallery')
+    ->execute();
+}
+
+/**
+ * Implements hook_enable().
+ */
+
+function unitegallery_enable() {
+  drupal_set_message(t('Thanks for installing Unite Gallery.'));
+}
+
+/**
+ * Implements hook_requirements().
+ */
+function unitegallery_requirements($phase) {
+  $requirements = array();
+
+  if ($phase == 'runtime') {
+    $t = get_t();
+    $library = libraries_detect('unitegallery');
+
+    $error_type = isset($library['error']) ? drupal_ucfirst($library['error']) : '';
+    $error_message = isset($library['error message']) ? $library['error message'] : '';
+
+    if (!$library['installed']) {
+      $requirements['unitegallery_library'] = array(
+        'title' => $t('Unite gallery plugin'),
+          'value' => $t('@e: At least @a', array('@e' => $error_type, '@a' => UNITEGALLERY_MIN_PLUGIN_VERSION)),
+          'severity' => REQUIREMENT_ERROR,
+          'description' => $t('!error You need to download the !unitegallery, extract the archive and place the unitegallery directory in the %path directory on your server.', array(
+            '!error' => $error_message,
+            '!unitegallery' => l($t('Unite gallery plugin'), $library['download url']),
+            '%path' => 'sites/all/libraries',
+        )),
+      );
+    }
+    elseif (version_compare($library['version'], UNITEGALLERY_MIN_PLUGIN_VERSION, '>=')) {
+      $requirements['unitegallery_library'] = array(
+        'title' => $t('Unite gallery plugin'),
+        'severity' => REQUIREMENT_OK,
+        'value' => 'OK',
+      );
+    }
+    else {
+      $requirements['unitegallery_library'] = array(
+        'title' => $t('Unite gallery plugin'),
+        'severity' => REQUIREMENT_OK,
+        'value' => $t('Installed'),
+      );
+    }
+  }
+
+  return $requirements;
+}

@@ -1,0 +1,12 @@
+name = Unite Gallery
+description = Allows to use Unite Gallery plugin.
+core = 7.x
+
+; Dependencies
+dependencies[] = libraries
+dependencies[] = jquery_update
+
+;files[] = classes/DefaultOptions.php
+;files[] = classes/UniteGallerySettings.php
+
+configure = admin/config/user-interface/unitegallery;
