@@ -1,9 +1,8 @@
 <?php
 
-
 /**
  * @file
- * Colorbox theme functions.
+ * Unite Gallery theme functions.
  */
 
 /**
