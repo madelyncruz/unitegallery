@@ -16,23 +16,20 @@ function unitegallery_theme_registry_alter(&$theme_registry) {
 }
 
 function unitegallery_theme_field(&$variables) {
-  if (isset($variables['element']['#formatter']) && $variables['element']['#formatter'] == 'unitegallery') {
-    $output = '';
+  $output = '';
 
+  if (isset($variables['element']['#formatter']) && $variables['element']['#formatter'] == 'unitegallery') {
     // Render the label, if it's not hidden.
     if (!$variables['label_hidden']) {
       $output .= '<div class="field-label"' . $variables['title_attributes'] . '>' . $variables['label'] . ':&nbsp;</div>';
     }
-
     // Render the items.
     foreach ($variables['items'] as $delta => $item) {
       $output .= drupal_render($item);
     }
-
     // Render the top-level DIV.
     $output = '<div id="unitegallery_' . $variables['element']['#object']->nid . '" class="unite-gallery"' . $variables['attributes'] . '>' . $output . '</div>';
   }
-
   else {
     $output = theme_field($variables);
   }
@@ -83,7 +80,6 @@ function unitegallery_libraries_info() {
     'download url' => 'https://github.com/vvvmax/unitegallery/',
     'version arguments' => array(
       'file' => 'dist/js/unitegallery.min.js',
-      //'pattern' => '/Unite Gallery, Version: (\d+)/',
       'pattern' => '@(?i:Unite Gallery, Version:)\sv?([0-9\.a-z]+)@',
       'lines' => 1,
     ),
@@ -200,6 +196,10 @@ function unitegallery_field_formatter_settings_summary($field, $instance, $view_
 function unitegallery_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
   $element = array();
 
+  if (module_exists('libraries')) {
+    $libraries = libraries_load('unitegallery');
+  }
+
   $settings = $display['settings'];
 
   if (!empty(variable_get('unitegallery_js_config_' . $settings['unitegallery_type']))) {
@@ -215,10 +215,6 @@ function unitegallery_field_formatter_view($entity_type, $entity, $field, $insta
   $settings += array('id' => $entity->nid, 'config'  => $js_config);
 
   $library = '/sites/all/libraries/unitegallery/dist/';
-
-  if (module_exists('libraries')) {
-    libraries_load('unitegallery');
-  }
 
   drupal_add_js(array('unitegallery' => $settings), array('type' => 'setting', 'scope' => JS_DEFAULT));
   drupal_add_css($library . 'themes/default/ug-theme-default.css');

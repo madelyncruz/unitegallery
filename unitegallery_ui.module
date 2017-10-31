@@ -64,9 +64,7 @@ function unitegallery_settings_form($form, &$form_state, $type) {
     '#type'        => 'textarea',
     '#title'       => t('@title configuration', array('@title' => $gallery_types[$type])),
     '#default_value' => variable_get('unitegallery_js_config_' . $type, drupal_json_encode($js_config)),
-    '#description' => t('Format should be like below:-<br />
-                        theme_enable_fullscreen_button: true,<br />
-                        theme_enable_play_button: true
+    '#description' => t('Sample format: {"gallery_width":"100%","gallery_height":500,"slider_control_zoom":false,"thumb_width":122,"thumb_height":80}
     ')
   );
 

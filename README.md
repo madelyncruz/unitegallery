@@ -29,8 +29,18 @@ This module allows to use Unite Gallery plugin.
 - Place the entire Unite Gallery directory into your Drupal sites modules directory (eg sites/all/modules).
 - Enable this module by navigating to: Administration > Modules.
 - Download and enable the libraries module.
-- Download jQuery Unite Gallery Library(version 1.7.45) from https://github.com/vvvmax/unitegallery/archive/master.zip
-- Install it in sites/all/libraries directory. Move only unitegallery folder located on unitegallery-master/package/ from extracted files.
-- The library should be available at a path like sites/all/libraries/unitegallery/js/unitegallery.js
+- Download jQuery Unite Gallery Library(version 1.7.45) from https://github.com/vvvmax/unitegallery/
+- Place the unite gallery library in sites/all/libraries
+- Extract the file downloaded and rename it to unitegallery
 
 ## CONFIGURATION
+- Configure the content type display settings.
+- Change the format to "Unite Gallery".
+- Select image style
+- Choose gallery type
+- Update
+- Save
+
+## JS SETTINGS
+- Navigate to admin/config/user-interface/unitegallery.
+- Each gallery type has configuration settings.
