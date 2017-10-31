@@ -46,3 +46,4 @@ folder located on unitegallery-master/package/ from extracted files.
 
 
 -- CONFIGURATION --
+
