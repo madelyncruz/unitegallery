@@ -54,214 +54,52 @@ function unitegallery_settings_form($form, &$form_state, $type) {
     exit;
   }
 
-  //module_load_include('php', 'unitegallery', 'UniteGallerySettings');
+  drupal_set_title(t('Unite Gallery @title Settings', array('@title' => $gallery_types[$type])));
 
-  //$settings = unitegallery_settings_options($type);
+  $form['#attached']['css'] = array(drupal_get_path('module', 'unitegallery') .'/theme/unitegallery_ui.css');
+  $form['back']['#markup'] = l(t('Go back'), 'admin/config/user-interface/unitegallery');
+
+  $js_config = unitegallery_js_config_default($type);
+  $form['config'] = array(
+    '#type'        => 'textarea',
+    '#title'       => t('@title configuration', array('@title' => $gallery_types[$type])),
+    '#default_value' => variable_get('unitegallery_js_config_' . $type, drupal_json_encode($js_config)),
+    '#description' => t('Format should be like below:-<br />
+                        theme_enable_fullscreen_button: true,<br />
+                        theme_enable_play_button: true
+    ')
+  );
+
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => t('Save configuration')
+  );
+
+  module_load_include('inc', 'unitegallery', 'includes/unitegallery_ui_default.settings');
+  if ($options = unitegallery_settings_default()) {
+    $data = array();
+    $data['header'] = array(
+      'name'        => t('Config'),
+      'value'       => t('Value'),
+      'description' => t('Description'),
+    );
+
+    foreach ($options as $configk => $configv) {
+      $data['rows'] = $configv['options'];
+      $form[$type][$configk] = array(
+        '#type' => 'fieldset',
+        '#title' => t($configv['title']),
+        '#collapsible' => TRUE,
+        '#value' => theme('table', array('header' => $data['header'],'rows' => $data['rows'])),
+        '#collapsed' => TRUE,
+      );
+    }
+  }
 
   return $form;
-  /*
-  foreach ($settings as $key => $element) {
-    $title = check_plain($key);
-
-    if (is_numeric($element['value'])) {
-      $form[$key] = array(
-        '#type' => 'textfield',
-        '#title' => $title,
-        '#default_value' => variable_get('unitegallery_' . $key, $element['value']),
-        '#description' => $element['description'],
-        '#element_validate' => array('element_validate_number'),
-      );
-    }
-    else if (is_bool($element['value'])) {
-      $form[$key] = array(
-        '#type' => 'radios',
-        '#title' => $title,
-        '#default_value' => variable_get('unitegallery_' . $key, $element['value']),
-        '#description' => $element['description'],
-        '#options' => array(1 => t('Yes'), 0 => t('No')),
-      );
-    }
-    else {
-      $form[$key] = array(
-        '#type' => 'textfield',
-        '#title' => $title,
-        '#default_value' => variable_get('unitegallery_' . $key, $element['value']),
-        '#description' => $element['description'],
-      );
-    }
-  }
-
-  return $form;*/
 }
 
-function unitegallery_settings_options($type) {
-  $items = array();
-
-  switch ($type) {
-    case 'default':
-      $items = unitegallery_settings_default();
-      break;
-
-    case 'tiles_columns':
-      $items = unitegallery_settings_tiles_columns();
-      break;
-
-    case 'tiles_justified':
-      $items = unitegallery_settings_tiles_justified();
-      break;
-
-    case 'tilesgrid':
-      $items = unitegallery_settings_tilesgrid();
-      break;
-
-    case 'compact':
-      $items = unitegallery_settings_compact();
-      break;
-
-    case 'grid':
-      $items = unitegallery_settings_grid();
-      break;
-
-    case 'slider':
-      $items = unitegallery_settings_slider();
-      break;
-
-    case 'video':
-      $items = unitegallery_settings_video();
-      break;
-
-    case 'carousel':
-      $items = unitegallery_settings_carousel();
-      break;
-  }
-
-  return $items;
-}
-
-
-function unitegallery_settings_default() {
-  $options = new stdClass;
-
-  $options->theme_options = new stdClass;
-  $options->theme_options->title = t('Theme options');
-  $options->theme_options->options = array(
-    'theme_enable_fullscreen_button' => array(
-      'value' => TRUE,
-      'description' => t('show, hide the theme fullscreen button. The position in the theme is constant')
-    ),
-    'theme_enable_play_button' => array(
-      'value' => TRUE,
-      'description' => t('show, hide the theme play button. The position in the theme is constant')
-    ),
-    'theme_enable_hidepanel_button' => array(
-      'value' => TRUE,
-      'description' => t('show, hide the hidepanel button')
-    ),
-    'theme_enable_text_panel' => array(
-      'value' => TRUE,
-      'description' => t('enable the panel text panel.')
-    ),
-    'theme_text_padding_left' => array(
-      'value' => 20,
-      'description' => t('left padding of the text in the textpanel')
-    ),
-    'theme_text_padding_right' => array(
-      'value' => 5,
-      'description' => t('right padding of the text in the textpanel')
-    ),
-    'theme_text_align' => array(
-      'value' => 'left',
-      'description' => t('left, center, right - the align of the text in the textpanel')
-    ),
-    'theme_text_type' => array(
-      'value' => 'title',
-      'description' => t('title, description - text that will be shown on the text panel, title or description')
-    ),
-    'theme_hide_panel_under_width' => array(
-      'value' => 480,
-      'description' => t('hide panel under certain browser width, if null, don\'t hide')
-    ),
-  );
-
-  $options->gallery_options = new stdClass;
-  $options->gallery_options->title = t('Gallery options');
-  $options->gallery_options->options = array(
-    'gallery_width' => array(
-      'value' => 900,
-      'description' => t('gallery width')
-    ),
-    'gallery_height' => array(
-      'value' => 500,
-      'description' => t('gallery height')
-    ),
-    'gallery_min_width' => array(
-      'value' => 400,
-      'description' => t('gallery minimal width when resizing')
-    ),
-    'gallery_min_height' => array(
-      'value' => 300,
-      'description' => t('gallery minimal height when resizing')
-    ),
-    'gallery_skin' => array(
-      'value' => 'default',
-      'description' => t('default, alexis etc... - the global skin of the gallery. Will change all gallery items by default.')
-    ),
-    'gallery_images_preload_type' => array(
-      'value' => 'minimal',
-      'description' => t('
-        all , minimal , visible - preload type of the images.<br />
-        minimal - only image nabours will be loaded each time.<br />
-        visible - visible thumbs images will be loaded each time.<br />
-        all - load all the images first time.
-      ')
-    ),
-    'gallery_autoplay' => array(
-      'value' => FALSE,
-      'description' => t('true / false - begin slideshow autoplay on start')
-    ),
-    'gallery_play_interval' => array(
-      'value' => 3000,
-      'description' => t('true / false - begin slideshow autoplay on start')
-    ),
-  );
-
-  $options->gallery_options = new stdClass;
-  $options->gallery_options->title = t('Gallery options');
-  $options->gallery_options->options = array(
-
-  );
-
-  return $options;
-}
-
-function unitegallery_settings_tiles_columns() {
-  return array();
-}
-
-function unitegallery_settings_tiles_justified() {
-  return array();
-}
-
-function unitegallery_settings_tilesgrid() {
-  return array();
-}
-
-function unitegallery_settings_compact() {
-  return array();
-}
-
-function unitegallery_settings_grid() {
-  return array();
-}
-
-function unitegallery_settings_slider() {
-  return array();
-}
-
-function unitegallery_settings_video() {
-  return array();
-}
-
-function unitegallery_settings_carousel() {
-  return array();
+function unitegallery_settings_form_submit(&$form, &$form_state) {
+  variable_set('unitegallery_js_config_' . $form_state['build_info']['args'][0], $form_state['values']['config']);
+  drupal_set_message(t('The configuration options have been saved.'));
 }

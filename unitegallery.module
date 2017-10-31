@@ -203,10 +203,17 @@ function unitegallery_field_formatter_view($entity_type, $entity, $field, $insta
 
   $settings = $display['settings'];
 
-  $settings += array(
-    'id'      => $entity->nid,
-    'config'  => unitegallery_js_config_default($settings['unitegallery_type'])
-  );
+  if (!empty(variable_get('unitegallery_js_config_' . $settings['unitegallery_type']))) {
+    $js_config = variable_get('unitegallery_js_config_' . $settings['unitegallery_type']);
+    $js_config = drupal_json_decode($js_config);
+  }
+  else {
+    $js_config = unitegallery_js_config_default($settings['unitegallery_type']);
+  }
+
+  $js_config['gallery_theme'] = $settings['unitegallery_type'];
+
+  $settings += array('id' => $entity->nid, 'config'  => $js_config);
 
   $library = '/sites/all/libraries/unitegallery/dist/';
 
@@ -274,19 +281,14 @@ function unitegallery_version_callback() {
   return TRUE;
 }
 
-function unitegallery_js_config_default($gallery_type) {
-  $js_config = array();
-
-  $js_config = array(
-    'gallery_theme'       => $gallery_type,
+function unitegallery_js_config_default() {
+  return array(
     'gallery_width'       => '100%',
     'gallery_height'      => 500,
     'slider_control_zoom' => FALSE,
     'thumb_width'         => 122,
     'thumb_height'        => 80,
   );
-
-  return $js_config;
 }
 
 function _unitegallery_media_types() {

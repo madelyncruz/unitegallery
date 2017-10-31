@@ -34,4 +34,3 @@ This module allows to use Unite Gallery plugin.
 - The library should be available at a path like sites/all/libraries/unitegallery/js/unitegallery.js
 
 ## CONFIGURATION
-

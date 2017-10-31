@@ -66,3 +66,18 @@ function unitegallery_requirements($phase) {
 
   return $requirements;
 }
+
+
+/**
+ * Implements hook_uninstall().
+ */
+function unitegallery_uninstall() {
+  $types = _unitegallery_media_types();
+
+  foreach ($types as $typek => $typev) {
+    if (empty($typek)) {
+      continue;
+    }
+    variable_del('unitegallery_js_config_' . $typek);
+  }
+}

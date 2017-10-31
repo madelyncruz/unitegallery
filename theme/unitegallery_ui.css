@@ -1,0 +1,12 @@
+#unitegallery-settings-form .fieldset-wrapper > div {
+  float: left;
+  width: 49%;
+  margin-right: 2%;
+}
+#unitegallery-settings-form .fieldset-wrapper > div:nth-child(2n+2) {
+  margin-right: 0;
+}
+#unitegallery-settings-form .fieldset-wrapper > div > label {
+  float: left;
+  margin-right: 10px;
+}
