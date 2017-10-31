@@ -197,63 +197,62 @@ function unitegallery_field_formatter_view($entity_type, $entity, $field, $insta
   $element = array();
 
   if (module_exists('libraries')) {
-    $libraries = libraries_load('unitegallery');
+    libraries_load('unitegallery');
+    $lib_path = libraries_get_path('unitegallery');
+
+    $settings = $display['settings'];
+
+    if (!empty(variable_get('unitegallery_js_config_' . $settings['unitegallery_type']))) {
+      $js_config = variable_get('unitegallery_js_config_' . $settings['unitegallery_type']);
+      $js_config = drupal_json_decode($js_config);
+    }
+    else {
+      $js_config = unitegallery_js_config_default($settings['unitegallery_type']);
+    }
+
+    $js_config['gallery_theme'] = $settings['unitegallery_type'];
+
+    $settings += array('id' => $entity->nid, 'config'  => $js_config);
+
+    drupal_add_js(array('unitegallery' => $settings), array('type' => 'setting', 'scope' => JS_DEFAULT));
+
+    switch ($settings['unitegallery_type']) {
+      case 'default':
+        drupal_add_js($lib_path . '/dist/themes/default/ug-theme-default.js');
+        break;
+
+      case 'compact':
+        drupal_add_js($lib_path . '/dist/themes/compact/ug-theme-compact.js');
+        break;
+
+      case 'tiles_columns':
+        drupal_add_js($lib_path . '/dist/themes/tiles/ug-theme-tiles.js');
+        break;
+
+      case 'tilesgrid':
+        drupal_add_js($lib_path . '/dist/themes/tilesgrid/ug-theme-tilesgrid.js');
+        break;
+
+      case 'grid':
+        drupal_add_js($lib_path . '/dist/themes/grid/ug-theme-grid.js');
+        break;
+
+      case 'slider':
+        drupal_add_js($lib_path . '/dist/themes/slider/ug-theme-slider.js');
+        break;
+
+      case 'video':
+        drupal_add_js($lib_path . '/dist/themes/video/ug-theme-video.js');
+        break;
+
+      case 'carousel':
+        drupal_add_js($lib_path . '/dist/themes/carousel/ug-theme-carousel.js');
+        break;
+    }
+
+    drupal_add_css($lib_path . '/dist/themes/default/ug-theme-default.css');
+    $element['#attached']['js'] = array(drupal_get_path('module', 'unitegallery') .'/theme/unitegallery.js');
   }
-
-  $settings = $display['settings'];
-
-  if (!empty(variable_get('unitegallery_js_config_' . $settings['unitegallery_type']))) {
-    $js_config = variable_get('unitegallery_js_config_' . $settings['unitegallery_type']);
-    $js_config = drupal_json_decode($js_config);
-  }
-  else {
-    $js_config = unitegallery_js_config_default($settings['unitegallery_type']);
-  }
-
-  $js_config['gallery_theme'] = $settings['unitegallery_type'];
-
-  $settings += array('id' => $entity->nid, 'config'  => $js_config);
-
-  $library = '/sites/all/libraries/unitegallery/dist/';
-
-  drupal_add_js(array('unitegallery' => $settings), array('type' => 'setting', 'scope' => JS_DEFAULT));
-  drupal_add_css($library . 'themes/default/ug-theme-default.css');
-
-  switch ($settings['unitegallery_type']) {
-    case 'default':
-      drupal_add_js($library . 'themes/default/ug-theme-default.js');
-      break;
-
-    case 'compact':
-      drupal_add_js($library . 'themes/compact/ug-theme-compact.js');
-      break;
-
-    case 'tiles_columns':
-      drupal_add_js($library . 'themes/tiles/ug-theme-tiles.js');
-      break;
-
-    case 'tilesgrid':
-      drupal_add_js($library . 'themes/tilesgrid/ug-theme-tilesgrid.js');
-      break;
-
-    case 'grid':
-      drupal_add_js($library . 'themes/grid/ug-theme-grid.js');
-      break;
-
-    case 'slider':
-      drupal_add_js($library . 'themes/slider/ug-theme-slider.js');
-      break;
-
-    case 'video':
-      drupal_add_js($library . 'themes/video/ug-theme-video.js');
-      break;
-
-    case 'carousel':
-      drupal_add_js($library . 'themes/carousel/ug-theme-carousel.js');
-      break;
-  }
-
-  $element['#attached']['js'] = array(drupal_get_path('module', 'unitegallery') .'/theme/unitegallery.js');
 
   foreach ($items as $delta => $item) {
     $element[$delta] = array(
