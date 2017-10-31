@@ -28,7 +28,7 @@ function unitegallery_theme_field(&$variables) {
       $output .= drupal_render($item);
     }
     // Render the top-level DIV.
-    $output = '<div id="unitegallery_' . $variables['element']['#object']->nid . '" class="unite-gallery"' . $variables['attributes'] . '>' . $output . '</div>';
+    $output = '<div id="unitegallery_' . $variables['element']['#object']->nid . '" class="unite-gallery field-type-image"' . $variables['attributes'] . '>' . $output . '</div>';
   }
   else {
     $output = theme_field($variables);
