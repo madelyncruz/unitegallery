@@ -1,0 +1,9 @@
+name = Unite Gallery UI
+description = Unite gallery administrations interface.
+package = HDMD
+core = 7.x
+
+; Dependencies
+dependencies[] = unitegallery
+
+configure = admin/config/user-interface/unitegallery
