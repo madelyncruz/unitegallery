@@ -1,11 +1,8 @@
 name = Unite Gallery
 description = Allows to use Unite Gallery plugin.
-package = HDMD
+package = Unite Gallery
 core = 7.x
 
 ; Dependencies
 dependencies[] = libraries
 dependencies[] = jquery_update
-
-; files[] = classes/DefaultOptions.php
-; files[] = classes/UniteGallerySettings.php

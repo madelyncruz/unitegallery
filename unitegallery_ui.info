@@ -1,6 +1,6 @@
 name = Unite Gallery UI
 description = Unite gallery administrations interface.
-package = HDMD
+package = Unite Gallery
 core = 7.x
 
 ; Dependencies

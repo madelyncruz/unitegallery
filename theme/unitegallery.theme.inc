@@ -6,7 +6,7 @@
  */
 
 /**
- * Returns HTML for an Colorbox image field formatter.
+ * Returns HTML for an Unite Gallery image field formatter.
  *
  * @param array $variables
  *   An associative array containing:
@@ -45,14 +45,14 @@ function theme_unitegallery_image_formatter($variables) {
 }
 
 /**
- * Returns HTML for an image using a specific Colorbox image style.
+ * Returns HTML for an image using a specific Unite Gallery image style.
  *
  * @param array $variables
  *   An associative array containing:
  *   - image: image item as array.
- *   - path: The path of the image that should be displayed in the Colorbox.
- *   - title: The title text that will be used as a caption in the Colorbox.
- *   - gid: Gallery id for Colorbox image grouping.
+ *   - path: The path of the image that should be displayed in the Unite Gallery.
+ *   - title: The title text that will be used as a caption in the Unite Gallery.
+ *   - gid: Gallery id for Unite Gallery image grouping.
  *
  * @return string
  *   An HTML string containing a link to the given path.

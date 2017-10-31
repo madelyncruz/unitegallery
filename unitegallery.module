@@ -81,14 +81,13 @@ function unitegallery_libraries_info() {
     'name' => 'Unite gallery plugin',
     'vendor url' => 'http://unitegallery.net/',
     'download url' => 'https://github.com/vvvmax/unitegallery/',
-    /*'version arguments' => array(
-      'file' => 'unitegallery.min.js',
-      //'pattern' => '/unitegallery.js\s*([\d\.]+)/',
-      //'pattern' => '@(?i:Version)\sv?([0-9\.a-z]+)@',
-      //'pattern' => '/Version (\d+)/',
-      'lines' => 100,
-    ),*/
-    'version callback' => 'unitegallery_version_callback',
+    'version arguments' => array(
+      'file' => 'dist/js/unitegallery.min.js',
+      //'pattern' => '/Unite Gallery, Version: (\d+)/',
+      'pattern' => '@(?i:Unite Gallery, Version:)\sv?([0-9\.a-z]+)@',
+      'lines' => 1,
+    ),
+    'version callback' => 'libraries_get_version',
     'files' => array(
       'css' => array(
         'dist/css/unite-gallery.css',
@@ -274,11 +273,6 @@ function unitegallery_field_formatter_view($entity_type, $entity, $field, $insta
   }
 
   return $element;
-}
-
-function unitegallery_version_callback() {
-  //use some fancy magic to get the version number... or don't
-  return TRUE;
 }
 
 function unitegallery_js_config_default() {
