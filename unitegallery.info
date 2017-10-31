@@ -9,4 +9,4 @@ dependencies[] = jquery_update
 ;files[] = classes/DefaultOptions.php
 ;files[] = classes/UniteGallerySettings.php
 
-configure = admin/config/user-interface/unitegallery;
+configure = admin/config/user-interface/unitegallery
