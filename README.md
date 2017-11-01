@@ -1,5 +1,5 @@
 # SUMMARY
-This module allows to use Unite Gallery plugin.
+This module allows to use Unite Gallery plugin. This module is still under development.
 
 # About Unite Gallery
 - The Unite Gallery is multipurpose javascript gallery based on jquery library.
@@ -33,20 +33,15 @@ This module allows to use Unite Gallery plugin.
 - Place the unite gallery library in sites/all/libraries
 - Extract the file downloaded and rename it to unitegallery
 - The javascript file structure should be as follows:
-- unitegallery
-- -- dist
-- --- js
-- ---- unitegallery
-- ---- unitegallery.min.js
-- --- themes
-- ---- carousel
-- ---- compact
-- ---- default
-- ---- grid
-- ---- slider
-- ---- tiles
-- ---- tilesgrid
-- ---- video
+- unitegallery/dist/js/unitegallery/unitegallery.min.js
+- unitegallery/dist/themes/carousel
+- unitegallery/dist/themes/compact
+- unitegallery/dist/themes/default
+- unitegallery/dist/themes/grid
+- unitegallery/dist/themes/slider
+- unitegallery/dist/themes/tiles
+- unitegallery/dist/themes/tilesgrid
+- unitegallery/dist/themes/video
 
 ## CONFIGURATION
 - Configure the content type display settings.
