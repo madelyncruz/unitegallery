@@ -32,6 +32,21 @@ This module allows to use Unite Gallery plugin.
 - Download jQuery Unite Gallery Library(version 1.7.45) from https://github.com/vvvmax/unitegallery/
 - Place the unite gallery library in sites/all/libraries
 - Extract the file downloaded and rename it to unitegallery
+- The javascript file structure should be as follows:
+- unitegallery
+- -- dist
+- --- js
+- ---- unitegallery
+- ---- unitegallery.min.js
+- --- themes
+- ---- carousel
+- ---- compact
+- ---- default
+- ---- grid
+- ---- slider
+- ---- tiles
+- ---- tilesgrid
+- ---- video
 
 ## CONFIGURATION
 - Configure the content type display settings.

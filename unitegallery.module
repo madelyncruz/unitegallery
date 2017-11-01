@@ -11,6 +11,11 @@ define('UNITEGALLERY_MIN_PLUGIN_VERSION', '1.7.45');
  */
 
 function unitegallery_theme_registry_alter(&$theme_registry) {
+  /**
+   * Get the path of this module
+   * Overrides the default render specifically to unite gallery widget only.
+   * @see unitegallery_theme_field
+   */
   $theme_registry['field']['theme path'] = drupal_get_path('module', 'unitegallery');
   $theme_registry['field']['function'] = 'unitegallery_theme_field';
 }
